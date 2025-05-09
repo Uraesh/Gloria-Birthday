@@ -29,6 +29,12 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            transition: opacity 0.3s ease;
+        }
+        
+        .audio-player.hidden {
+            opacity: 0;
+            pointer-events: none;
         }
         
         .audio-player button {
@@ -59,6 +65,31 @@
             margin-left: 10px;
             font-size: 0.9rem;
             color: var(--dark-color);
+        }
+        
+        .music-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 101;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+        
+        .music-icon:hover {
+            background: var(--secondary-color);
+            transform: scale(1.1);
         }
         
         body {
@@ -399,6 +430,103 @@
             }
         }
         
+        .balloon-container {
+            position: fixed;
+            bottom: -100px;
+            animation: float-up 15s linear infinite;
+            opacity: 0.7;
+            z-index: -1;
+        }
+        
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) rotate(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(20deg);
+                opacity: 0;
+            }
+        }
+        
+        .balloon {
+            width: 60px;
+            height: 70px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .balloon:after {
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 15px;
+            background: var(--primary-color);
+            border-radius: 0 0 5px 5px;
+            bottom: -8px;
+            left: 25px;
+        }
+        
+        .balloon-string {
+            height: 50px;
+            width: 1px;
+            background: rgba(0, 0, 0, 0.3);
+            position: absolute;
+            bottom: -50px;
+            left: 30px;
+        }
+        
+        #surprise-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--light-color);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            text-align: center;
+            max-width: 90%;
+            width: 300px;
+            box-sizing: border-box;
+        }
+        
+        #surprise-message h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        #surprise-message p {
+            font-size: 1rem;
+            margin: 10px 0;
+        }
+        
+        #surprise-message button {
+            padding: 10px 20px;
+            font-size: 1rem;
+        }
+        
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 99;
+        }
+        
         @media (max-width: 768px) {
             h1 {
                 font-size: 3.5rem;
@@ -417,86 +545,44 @@
             .wish-card-container {
                 margin-bottom: 70px;
             }
-        }
-
-        .balloon-container {
-            position: fixed;
-            bottom: -100px;
-            animation: float-up 15s linear infinite;
-            opacity: 0.7;
-            z-index: -1;
-        }
-
-        @keyframes float-up {
-            0% {
-                transform: translateY(0) rotate(0);
-                opacity: 0;
+            
+            #surprise-message {
+                width: 90%;
+                padding: 15px;
             }
-            10% {
-                opacity: 0.7;
+            
+            #surprise-message h2 {
+                font-size: 1.5rem;
             }
-            90% {
-                opacity: 0.7;
+            
+            #surprise-message p {
+                font-size: 0.9rem;
             }
-            100% {
-                transform: translateY(-100vh) rotate(20deg);
-                opacity: 0;
+            
+            #surprise-message button {
+                padding: 8px 16px;
+                font-size: 0.9rem;
             }
         }
-
-        .balloon {
-            width: 60px;
-            height: 70px;
-            background: var(--primary-color);
-            border-radius: 50%;
-            position: relative;
-            box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .balloon:after {
-            content: "";
-            position: absolute;
-            width: 10px;
-            height: 15px;
-            background: var(--primary-color);
-            border-radius: 0 0 5px 5px;
-            bottom: -8px;
-            left: 25px;
-        }
-
-        .balloon-string {
-            height: 50px;
-            width: 1px;
-            background: rgba(0, 0, 0, 0.3);
-            position: absolute;
-            bottom: -50px;
-            left: 30px;
-        }
-
-        #surprise-message {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: var(--light-color);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
-            z-index: 100;
-            text-align: center;
-            max-width: 80%;
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 99;
+        
+        @media (max-width: 480px) {
+            #surprise-message {
+                width: 95%;
+                padding: 10px;
+            }
+            
+            #surprise-message h2 {
+                font-size: 1.3rem;
+            }
+            
+            #surprise-message p {
+                font-size: 0.8rem;
+            }
+            
+            #surprise-message button {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
@@ -511,16 +597,19 @@
         <button class="gift-button" onclick="closeMessage()">Merci! ❤️</button>
     </div>
     
+    <!-- Music Icon -->
+    <button class="music-icon" id="music-icon">🎵</button>
+    
     <!-- Lecteur audio -->
-    <div class="audio-player">
-        <button id="play-pause-btn">▶</button>
+    <div class="audio-player hidden" id="audio-player">
+        <button id="play-pause-btn">❚❚</button>
         <input type="range" min="0" max="1" step="0.1" value="0.5" class="volume-control" id="volume-control">
         <div class="song-info">
             <div>Joyeux Anniversaire</div>
             <div><small>Musique festive</small></div>
         </div>
     </div>
-    <audio id="background-music" loop>
+    <audio id="background-music" loop autoplay>
         <source src="Song/🎵 GLORIA'S DAY 🎵  .mp3" type="audio/mpeg">
         Votre navigateur ne supporte pas l'élément audio
     </audio>
@@ -638,7 +727,6 @@
         <div class="balloon-string"></div>
     </div>
     
-    <!-- Confetti -->
     <script>
         // Create confetti
         function createConfetti() {
@@ -704,17 +792,14 @@
         function handleCardPhysics() {
             const cards = document.querySelectorAll('.wish-card-container');
             
-            // Position initiale
             cards.forEach(cardContainer => {
                 const rotate = cardContainer.getAttribute('data-rotate');
                 const card = cardContainer.querySelector('.wish-card');
                 const string = cardContainer.querySelector('.string');
                 
-                // Rotation initiale
                 card.style.transform = `rotateZ(${rotate}deg)`;
                 string.style.transform = `translateX(-50%) rotateZ(${rotate/2}deg)`;
                 
-                // Gérer l'effet de mouvement
                 cardContainer.addEventListener('mousemove', handleCardMovement);
                 cardContainer.addEventListener('mouseenter', () => {
                     cardContainer.setAttribute('data-active', 'true');
@@ -725,7 +810,6 @@
                 });
             });
             
-            // Mouvement général de balancement
             setInterval(() => {
                 cards.forEach(cardContainer => {
                     if (!cardContainer.hasAttribute('data-active')) {
@@ -749,20 +833,16 @@
             const card = cardContainer.querySelector('.wish-card');
             const string = cardContainer.querySelector('.string');
             
-            // Position de la souris par rapport au centre de la carte
             const rect = cardContainer.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
             
-            // Calcul de la distance et de l'angle
             const distX = (event.clientX - centerX) / rect.width * 15;
             const distY = (event.clientY - centerY) / rect.height * 5;
             
-            // Plus l'effet est fort quand on est proche du fil
             const stringEffect = (event.clientY - rect.top) / rect.height;
             const stringDeflection = distX * (1 - Math.min(stringEffect * 2, 1));
             
-            // Application de la transformation
             card.style.transform = `rotateY(${distX}deg) rotateX(${-distY}deg)`;
             string.style.transform = `translateX(-50%) rotateZ(${stringDeflection/2}deg)`;
         }
@@ -772,14 +852,12 @@
             const card = cardContainer.querySelector('.wish-card');
             const string = cardContainer.querySelector('.string');
             
-            // Animation douce de retour à la position initiale
             card.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
             string.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
             
             card.style.transform = `rotateZ(${rotate}deg)`;
             string.style.transform = `translateX(-50%) rotateZ(${rotate/2}deg)`;
             
-            // Réinitialiser la transition après l'animation
             setTimeout(() => {
                 card.style.transition = '';
                 string.style.transition = '';
@@ -791,6 +869,8 @@
             const audio = document.getElementById('background-music');
             const playPauseBtn = document.getElementById('play-pause-btn');
             const volumeControl = document.getElementById('volume-control');
+            const musicIcon = document.getElementById('music-icon');
+            const audioPlayer = document.getElementById('audio-player');
             
             // Initialisation du volume
             audio.volume = volumeControl.value;
@@ -811,31 +891,29 @@
                 audio.volume = volumeControl.value;
             });
             
-            // Lecture automatique (désactivée par défaut pour respecter les politiques des navigateurs)
-            document.addEventListener('click', function() {
-                if (audio.paused) {
-                    audio.play().then(() => {
-                        playPauseBtn.textContent = '❚❚';
-                    }).catch(e => {
-                        console.log("La lecture automatique a été bloquée par le navigateur.");
-                    });
-                }
-            }, {once: true});
+            // Toggle audio player visibility
+            musicIcon.addEventListener('click', () => {
+                audioPlayer.classList.toggle('hidden');
+                musicIcon.style.display = audioPlayer.classList.contains('hidden') ? 'flex' : 'none';
+            });
+            
+            // Autoplay music
+            audio.play().then(() => {
+                playPauseBtn.textContent = '❚❚';
+            }).catch(e => {
+                console.log("La lecture automatique a été bloquée par le navigateur.");
+            });
         }
         
         // Initialize
         window.onload = function() {
             createConfetti();
             
-            // Add slight rotation to cards for more dynamic feel
             document.querySelectorAll('.card').forEach(card => {
                 card.style.transform = `rotate(${(Math.random() - 0.5) * 1}deg)`;
             });
             
-            // Initialiser la physique des cartes
             handleCardPhysics();
-            
-            // Initialiser le lecteur audio
             setupAudioPlayer();
         };
     </script>
