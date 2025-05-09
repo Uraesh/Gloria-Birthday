@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joyeux Anniversaire Gloria</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #9c27b0;
+            --secondary-color: #e91e63;
+            --accent-color: #ffd700;
+            --dark-color: #333;
+            --light-color: #fff;
+        }
+        
+        /* Lecteur audio stylisé */
+        .audio-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .audio-player button {
+            background: var(--primary-color);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .audio-player button:hover {
+            background: var(--secondary-color);
+            transform: scale(1.1);
+        }
+        
+        .volume-control {
+            width: 100px;
+        }
+        
+        .song-info {
+            margin-left: 10px;
+            font-size: 0.9rem;
+            color: var(--dark-color);
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #eef2f3 100%);
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark-color);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: var(--light-color);
+            border-radius: 0 0 50% 50% / 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-color);
+            animation: confetti-fall 5s ease-in-out infinite;
+        }
+        
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(600px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 5rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px var(--accent-color), 0 0 20px var(--accent-color);
+            }
+            to {
+                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px var(--accent-color), 0 0 40px var(--accent-color);
+            }
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            margin-top: 10px;
+            font-weight: 400;
+        }
+        
+        .card {
+            background-color: var(--light-color);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+        
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-top: 0;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 3px;
+        }
+        
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 20px;
+            margin: 30px 0;
+        }
+        
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            text-align: right;
+            margin-top: 40px;
+            color: var(--primary-color);
+        }
+        
+        .cake-container {
+            text-align: center;
+            margin: 50px 0;
+        }
+        
+        .cake {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+        
+        .cake-base {
+            width: 200px;
+            height: 100px;
+            background: linear-gradient(to right, #f9d4d4, #ffcccb);
+            border-radius: 10px 10px 100px 100px;
+            position: absolute;
+            bottom: 0;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cake-middle {
+            width: 180px;
+            height: 80px;
+            background: linear-gradient(to right, #f9e4d4, #ffeecb);
+            border-radius: 10px 10px 90px 90px;
+            position: absolute;
+            bottom: 100px;
+            left: 10px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cake-top {
+            width: 160px;
+            height: 60px;
+            background: linear-gradient(to right, #d4f9e4, #cbffec);
+            border-radius: 10px 10px 80px 80px;
+            position: absolute;
+            bottom: 180px;
+            left: 20px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .candle {
+            width: 10px;
+            height: 30px;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            position: absolute;
+            bottom: 240px;
+            left: 95px;
+            border-radius: 5px;
+        }
+        
+        .flame {
+            width: 15px;
+            height: 30px;
+            background: linear-gradient(to top, #ff9a9e, #ffd700);
+            border-radius: 50% 50% 20% 20%;
+            position: absolute;
+            bottom: 270px;
+            left: 92.5px;
+            box-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
+            animation: flicker 1s ease-in-out infinite alternate;
+            transform-origin: center bottom;
+        }
+        
+        @keyframes flicker {
+            0%, 100% {
+                transform: scaleY(1) rotate(-5deg);
+                box-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
+            }
+            25% {
+                transform: scaleY(1.1) rotate(5deg);
+                box-shadow: 0 0 15px #ffd700, 0 0 25px #ffd700;
+            }
+            50% {
+                transform: scaleY(0.9) rotate(-2deg);
+                box-shadow: 0 0 5px #ffd700, 0 0 15px #ffd700;
+            }
+            75% {
+                transform: scaleY(1.05) rotate(2deg);
+                box-shadow: 0 0 12px #ffd700, 0 0 22px #ffd700;
+            }
+        }
+        
+        .wishes-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            justify-content: center;
+            margin: 80px 0;
+            perspective: 1000px;
+            height: 350px;
+        }
+        
+        .wish-card {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--light-color);
+            padding: 20px;
+            border-radius: 10px;
+            width: 200px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform-style: preserve-3d;
+            transform-origin: center top;
+            position: relative;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .wish-card-container {
+            position: relative;
+            transform-style: preserve-3d;
+            width: 200px;
+            height: 280px;
+        }
+        
+        .string {
+            position: absolute;
+            width: 2px;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.3);
+            top: -60px;
+            left: 50%;
+            transform-origin: top center;
+            transform: translateX(-50%);
+            z-index: -1;
+        }
+        
+        .string:before {
+            content: "";
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ffd700;
+            border-radius: 50%;
+            top: -4px;
+            left: -3px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .wish-card:after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateZ(-1px);
+        }
+        
+        .wish-card h3 {
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+        
+        .gift-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: var(--light-color);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .gift-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gift-button:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: var(--light-color);
+            border-radius: 50% 50% 0 0 / 20px;
+            margin-top: 50px;
+        }
+        
+        .heart {
+            display: inline-block;
+            color: var(--accent-color);
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3.5rem;
+            }
+            
+            .signature {
+                font-size: 1.5rem;
+            }
+            
+            .wishes-container {
+                flex-direction: column;
+                align-items: center;
+                height: auto;
+            }
+            
+            .wish-card-container {
+                margin-bottom: 70px;
+            }
+        }
+
+        .balloon-container {
+            position: fixed;
+            bottom: -100px;
+            animation: float-up 15s linear infinite;
+            opacity: 0.7;
+            z-index: -1;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) rotate(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(20deg);
+                opacity: 0;
+            }
+        }
+
+        .balloon {
+            width: 60px;
+            height: 70px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .balloon:after {
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 15px;
+            background: var(--primary-color);
+            border-radius: 0 0 5px 5px;
+            bottom: -8px;
+            left: 25px;
+        }
+
+        .balloon-string {
+            height: 50px;
+            width: 1px;
+            background: rgba(0, 0, 0, 0.3);
+            position: absolute;
+            bottom: -50px;
+            left: 30px;
+        }
+
+        #surprise-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--light-color);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            text-align: center;
+            max-width: 80%;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 99;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+    <div id="surprise-message">
+        <h2>🎉 Surprise! 🎉</h2>
+        <p>Chère Gloria,</p>
+        <p>Ce message secret est pour te dire à quel point tu es extraordinaire et combien tu comptes pour nous tous.</p>
+        <p>Que cette nouvelle année de ta vie soit remplie de moments inoubliables, de succès et de bonheur infini!</p>
+        <p>Joyeux Anniversaire!</p>
+        <button class="gift-button" onclick="closeMessage()">Merci! ❤️</button>
+    </div>
+    
+    <!-- Lecteur audio -->
+    <div class="audio-player">
+        <button id="play-pause-btn">▶</button>
+        <input type="range" min="0" max="1" step="0.1" value="0.5" class="volume-control" id="volume-control">
+        <div class="song-info">
+            <div>Joyeux Anniversaire</div>
+            <div><small>Musique festive</small></div>
+        </div>
+    </div>
+    <audio id="background-music" loop>
+        <source src="Song/🎵 GLORIA'S DAY 🎵  .mp3" type="audio/mpeg">
+        Votre navigateur ne supporte pas l'élément audio
+    </audio>
+
+    <header>
+        <h1>Joyeux Anniversaire</h1>
+        <div class="subtitle">À notre merveilleuse</div>
+        <h1>GLORIA</h1>
+    </header>
+    
+    <div class="container">
+        <div class="card">
+            <h2>Une Célébration Exceptionnelle</h2>
+            <p>Aujourd'hui n'est pas un jour comme les autres. C'est une journée dédiée à célébrer une personne extraordinaire dont la présence illumine nos vies et dont les accomplissements nous inspirent tous.</p>
+            
+            <p>Chère Gloria, alors que nous marquons cette étape importante de ta vie, nous tenons à te dire combien tu es précieuse pour nous tous. Ton intelligence, ta gentillesse et ta détermination font de toi une personne véritablement remarquable.</p>
+            
+            <div class="quote">
+                "Le succès n'est pas final, l'échec n'est pas fatal: c'est le courage de continuer qui compte."
+            </div>
+            
+            <p>Cette citation célèbre reflète parfaitement ton esprit indomptable et ta capacité à surmonter tous les obstacles. En cette journée spéciale, nous te souhaitons que tous tes rêves deviennent réalité et que l'année à venir soit remplie de moments de joie, de découvertes et d'accomplissements.</p>
+            
+            <div class="signature">Avec toute notre affection</div>
+        </div>
+        
+        <div class="cake-container">
+            <div class="cake" onclick="showSurprise()">
+                <div class="cake-base"></div>
+                <div class="cake-middle"></div>
+                <div class="cake-top"></div>
+                <div class="candle"></div>
+                <div class="flame"></div>
+            </div>
+            <p><em>Clique sur le gâteau pour une surprise!</em></p>
+        </div>
+        
+        <div class="wishes-container">
+            <div class="wish-card-container" data-rotate="-3" data-swing-factor="0.8">
+                <div class="string"></div>
+                <div class="wish-card">
+                    <h3>Bonheur</h3>
+                    <p>Que chaque jour t'apporte de nouveaux sourires et de la joie dans ton cœur.</p>
+                </div>
+            </div>
+            <div class="wish-card-container" data-rotate="2" data-swing-factor="1.2">
+                <div class="string"></div>
+                <div class="wish-card">
+                    <h3>Santé</h3>
+                    <p>Une santé de fer pour réaliser tous tes projets et profiter pleinement de la vie.</p>
+                </div>
+            </div>
+            <div class="wish-card-container" data-rotate="-2" data-swing-factor="1">
+                <div class="string"></div>
+                <div class="wish-card">
+                    <h3>Succès</h3>
+                    <p>Que tes efforts soient couronnés de succès et que tes rêves deviennent réalité.</p>
+                </div>
+            </div>
+            <div class="wish-card-container" data-rotate="3" data-swing-factor="0.9">
+                <div class="string"></div>
+                <div class="wish-card">
+                    <h3>Amour</h3>
+                    <p>Que l'amour et l'amitié t'entourent et t'accompagnent tout au long de l'année.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>Un Mot du Professeur Jean-Pierre Sauvage</h2>
+            <p>En tant qu'expert ayant consacré plus de 30 ans à la recherche et au développement, et ayant eu l'honneur de recevoir le prix Nobel de chimie et sept autres distinctions internationales pour mes travaux sur les machines moléculaires, je ne peux m'empêcher d'établir un parallèle entre l'excellence scientifique et ta remarquable personnalité.</p>
+            
+            <p>Tout comme dans mes recherches où j'ai découvert que les composants les plus petits peuvent créer les systèmes les plus impressionnants, ce sont souvent les petits gestes et les moments partagés qui construisent les relations les plus solides et les plus précieuses.</p>
+            
+            <p>Ta capacité à innover, à résoudre des problèmes complexes et à toujours pousser les limites de ce qui est possible me rappelle l'esprit d'exploration qui anime les plus grands chercheurs. Ton impact sur notre communauté est comparable à une réaction en chaîne positive qui transforme tout ce qu'elle touche.</p>
+            
+            <p>En ce jour spécial, je te souhaite de continuer à briller de mille feux et à inspirer tous ceux qui ont la chance de croiser ton chemin.</p>
+            
+            <div class="signature">Prof. Jean-Pierre Sauvage</div>
+        </div>
+        
+        <div style="text-align: center; margin: 40px 0;">
+            <button class="gift-button" onclick="showSurprise()">Ouvrir Ton Cadeau 🎁</button>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Créé avec <span class="heart">❤</span> pour Gloria</p>
+        <p>© 2025 - Une journée inoubliable</p>
+    </footer>
+    
+    <!-- Balloons -->
+    <div class="balloon-container" style="left: 10%; animation-delay: 0s;">
+        <div class="balloon" style="background: #9c27b0;"></div>
+        <div class="balloon-string"></div>
+    </div>
+    <div class="balloon-container" style="left: 20%; animation-delay: 5s;">
+        <div class="balloon" style="background: #e91e63;"></div>
+        <div class="balloon-string"></div>
+    </div>
+    <div class="balloon-container" style="left: 35%; animation-delay: 2s;">
+        <div class="balloon" style="background: #ffd700;"></div>
+        <div class="balloon-string"></div>
+    </div>
+    <div class="balloon-container" style="left: 50%; animation-delay: 7s;">
+        <div class="balloon" style="background: #9c27b0;"></div>
+        <div class="balloon-string"></div>
+    </div>
+    <div class="balloon-container" style="left: 70%; animation-delay: 3s;">
+        <div class="balloon" style="background: #e91e63;"></div>
+        <div class="balloon-string"></div>
+    </div>
+    <div class="balloon-container" style="left: 85%; animation-delay: 6s;">
+        <div class="balloon" style="background: #ffd700;"></div>
+        <div class="balloon-string"></div>
+    </div>
+    
+    <!-- Confetti -->
+    <script>
+        // Create confetti
+        function createConfetti() {
+            const header = document.querySelector('header');
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = ['#9c27b0', '#e91e63', '#ffd700', '#4caf50', '#2196f3'][Math.floor(Math.random() * 5)];
+                confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                confetti.style.animationDelay = (Math.random() * 5) + 's';
+                header.appendChild(confetti);
+            }
+        }
+        
+        // Show surprise message
+        function showSurprise() {
+            document.getElementById('surprise-message').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+            
+            // Create confetti burst
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'fixed';
+                    confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                    confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                    confetti.style.backgroundColor = ['#9c27b0', '#e91e63', '#ffd700', '#4caf50', '#2196f3'][Math.floor(Math.random() * 5)];
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    confetti.style.top = '50%';
+                    confetti.style.left = '50%';
+                    confetti.style.zIndex = '101';
+                    
+                    const angle = Math.random() * Math.PI * 2;
+                    const velocity = Math.random() * 300 + 200;
+                    const x = Math.cos(angle) * velocity;
+                    const y = Math.sin(angle) * velocity;
+                    
+                    confetti.style.transform = 'translate(-50%, -50%)';
+                    confetti.style.animation = 'none';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.style.transition = 'all 1s ease-out';
+                        confetti.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) rotate(${Math.random() * 360}deg)`;
+                        confetti.style.opacity = '0';
+                    }, 10);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 1500);
+                }, Math.random() * 500);
+            }
+        }
+        
+        // Close surprise message
+        function closeMessage() {
+            document.getElementById('surprise-message').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+        
+        // Gestion physique des pancartes suspendues
+        function handleCardPhysics() {
+            const cards = document.querySelectorAll('.wish-card-container');
+            
+            // Position initiale
+            cards.forEach(cardContainer => {
+                const rotate = cardContainer.getAttribute('data-rotate');
+                const card = cardContainer.querySelector('.wish-card');
+                const string = cardContainer.querySelector('.string');
+                
+                // Rotation initiale
+                card.style.transform = `rotateZ(${rotate}deg)`;
+                string.style.transform = `translateX(-50%) rotateZ(${rotate/2}deg)`;
+                
+                // Gérer l'effet de mouvement
+                cardContainer.addEventListener('mousemove', handleCardMovement);
+                cardContainer.addEventListener('mouseenter', () => {
+                    cardContainer.setAttribute('data-active', 'true');
+                });
+                cardContainer.addEventListener('mouseleave', () => {
+                    cardContainer.removeAttribute('data-active');
+                    resetCardPosition(cardContainer);
+                });
+            });
+            
+            // Mouvement général de balancement
+            setInterval(() => {
+                cards.forEach(cardContainer => {
+                    if (!cardContainer.hasAttribute('data-active')) {
+                        const rotate = parseFloat(cardContainer.getAttribute('data-rotate'));
+                        const swingFactor = parseFloat(cardContainer.getAttribute('data-swing-factor'));
+                        const card = cardContainer.querySelector('.wish-card');
+                        const string = cardContainer.querySelector('.string');
+                        
+                        const now = Date.now() / 1000;
+                        const swingAmount = Math.sin(now * swingFactor) * 2;
+                        
+                        card.style.transform = `rotateZ(${rotate + swingAmount}deg)`;
+                        string.style.transform = `translateX(-50%) rotateZ(${(rotate + swingAmount)/2}deg)`;
+                    }
+                });
+            }, 16);
+        }
+        
+        function handleCardMovement(event) {
+            const cardContainer = event.currentTarget;
+            const card = cardContainer.querySelector('.wish-card');
+            const string = cardContainer.querySelector('.string');
+            
+            // Position de la souris par rapport au centre de la carte
+            const rect = cardContainer.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            // Calcul de la distance et de l'angle
+            const distX = (event.clientX - centerX) / rect.width * 15;
+            const distY = (event.clientY - centerY) / rect.height * 5;
+            
+            // Plus l'effet est fort quand on est proche du fil
+            const stringEffect = (event.clientY - rect.top) / rect.height;
+            const stringDeflection = distX * (1 - Math.min(stringEffect * 2, 1));
+            
+            // Application de la transformation
+            card.style.transform = `rotateY(${distX}deg) rotateX(${-distY}deg)`;
+            string.style.transform = `translateX(-50%) rotateZ(${stringDeflection/2}deg)`;
+        }
+        
+        function resetCardPosition(cardContainer) {
+            const rotate = cardContainer.getAttribute('data-rotate');
+            const card = cardContainer.querySelector('.wish-card');
+            const string = cardContainer.querySelector('.string');
+            
+            // Animation douce de retour à la position initiale
+            card.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            string.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            
+            card.style.transform = `rotateZ(${rotate}deg)`;
+            string.style.transform = `translateX(-50%) rotateZ(${rotate/2}deg)`;
+            
+            // Réinitialiser la transition après l'animation
+            setTimeout(() => {
+                card.style.transition = '';
+                string.style.transition = '';
+            }, 800);
+        }
+        
+        // Gestion du lecteur audio
+        function setupAudioPlayer() {
+            const audio = document.getElementById('background-music');
+            const playPauseBtn = document.getElementById('play-pause-btn');
+            const volumeControl = document.getElementById('volume-control');
+            
+            // Initialisation du volume
+            audio.volume = volumeControl.value;
+            
+            // Gestionnaire du bouton play/pause
+            playPauseBtn.addEventListener('click', () => {
+                if (audio.paused) {
+                    audio.play();
+                    playPauseBtn.textContent = '❚❚';
+                } else {
+                    audio.pause();
+                    playPauseBtn.textContent = '▶';
+                }
+            });
+            
+            // Gestionnaire du volume
+            volumeControl.addEventListener('input', () => {
+                audio.volume = volumeControl.value;
+            });
+            
+            // Lecture automatique (désactivée par défaut pour respecter les politiques des navigateurs)
+            document.addEventListener('click', function() {
+                if (audio.paused) {
+                    audio.play().then(() => {
+                        playPauseBtn.textContent = '❚❚';
+                    }).catch(e => {
+                        console.log("La lecture automatique a été bloquée par le navigateur.");
+                    });
+                }
+            }, {once: true});
+        }
+        
+        // Initialize
+        window.onload = function() {
+            createConfetti();
+            
+            // Add slight rotation to cards for more dynamic feel
+            document.querySelectorAll('.card').forEach(card => {
+                card.style.transform = `rotate(${(Math.random() - 0.5) * 1}deg)`;
+            });
+            
+            // Initialiser la physique des cartes
+            handleCardPhysics();
+            
+            // Initialiser le lecteur audio
+            setupAudioPlayer();
+        };
+    </script>
+</body>
+</html>
